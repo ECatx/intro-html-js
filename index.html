@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    </head>
+    <body class="bg-black">
+    <div class="min-h-screen container flex flex-col items-center justify-center">
+        <div class="title">       
+            <h1 class="text-6xl text-white font-light my-4">Eric's List</h1> 
+        </div>
+        <div class="form w-full my-8">
+            <form id="addForm" class="flex">
+                <input type="text" id="newTodo" class="flex-grow px-4 rounded-l-lg" placeholder="To Do"/>
+                <button class="bg-blue-500 rounded-r-lg text-white py-2 px-4 hover:bg-blue-700">Add</button>
+            </form>
+        </div>
+        <div id="todos" class="w-2/3 space-y-8 my-4">
+            <div>
+                <h3 class="text-2xl text-blue-800">Pending Items</h3>
+                <ul id="pendinglist" class="space-y-4">
+                    <li></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-2xl text-yellow-100">Completed Items</h3>
+                <ul id="completedlist" class="space-y-4">
+                    
+                    <li></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+    </body>
+</html>
