@@ -1,39 +1,43 @@
 const todos = [];
 
+const get = (elements) => elements.map((element) => document.getElementById(element));
 
-const pendingCLass = "bg-blue-400 w-full text-center text-white rounded py-4 border-2 border-blue-500 transition transform ease-in-out duration-300 hover:bg-blue-500 hover:text-white hover:scale-110 hover:-rotate-1 cursor-pointer";
-const completedClass = "bg-yellow-400 w-full text-center text-white rounded py-4 border-2 border-yellow-500 transition transform ease-in-out duration-300 hover:bg-yellow-500 hover:text-white hover:scale-110 hover:rotate-1 cursor-pointer";
-const pendingList = document.getElementById("pendinglist");
-const completedList = document.getElementById("completedlist");
+const [pendingList,completedList,newTodo,addForm] = get(["pendinglist","completedlist","newTodo","addForm"]);
 
-const showTodos = () => {
-    const pendingTodos = todos.filter((todo) => todo.status === "pending");
 
-    pendingList.innerHTML = "";
-    pendingTodos.forEach((todo)=>{
-        const pendingItem = document.createElement('li');
-        pendingItem.className= pendingCLass;
-        pendingItem.innerText= todo.text;
-        pendingItem.id = todo.id;
-        pendingList.appendChild(pendingItem);
-    });
-    
-    const completedTodos = todos.filter((todo) => todo.status === "done");
-    
-    completedList.innerHTML = "";
-    completedTodos.forEach((todo)=>{
-        const completedItem = document.createElement('li');
-        completedItem.className= completedClass;
-        completedItem.innerText= todo.text;
-        completedItem.id = todo.id;
-        completedList.appendChild(completedItem);
+const newList = [
+    {
+        element: pendingList,
+        status: "pending",
+    },
+    {
+        element: completedList,
+        status: "done",
+    },
+];
+
+const cssClasses = {
+    pending:"bg-blue-400 w-full text-center text-white rounded py-4 border-2 border-blue-500 transition transform ease-in-out duration-300 hover:bg-blue-500 hover:text-white hover:scale-110 hover:-rotate-1 cursor-pointer",
+    done: "bg-yellow-400 w-full text-center text-white rounded py-4 border-2 border-yellow-500 transition transform ease-in-out duration-300 hover:bg-yellow-500 hover:text-white hover:scale-110 hover:rotate-1 cursor-pointer"
+};
+
+const updateTodos = () => {
+    newList.forEach(list => {
+        const filteredTodos = todos.filter((todo) => todo.status === list.status);
+
+        list.element.innerHTML = "";
+        filteredTodos.forEach((todo) => {
+            const item = document.createElement('li');
+            item.className= cssClasses[list.status];
+            item.innerText= todo.text;
+            item.id = todo.id;
+            list.element.appendChild(item);
+        });
     });
 };
 
 
 
-const newTodo = document.getElementById("newTodo");
-const addForm = document.getElementById("addForm");
 addForm.addEventListener('submit', event=>{
     event.preventDefault();
     todos.push({
@@ -42,16 +46,16 @@ addForm.addEventListener('submit', event=>{
     status: "pending",
 }); 
 newTodo.value = "";
-showTodos();
+updateTodos();
 });
 
 pendingList.addEventListener('click',(event)=>{
     todos.find(todo => todo.id === event.target.id).status = "done";
-    showTodos();
+    updateTodos();
 });
 
 completedList.addEventListener('click',(event)=>{
     todos.find(todo => todo.id === event.target.id).status = "pending";
-    showTodos();
+    updateTodos();
 });
 
